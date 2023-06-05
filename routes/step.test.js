@@ -1,6 +1,7 @@
 const request = require('supertest');
 const app = require('../server');
 const Step = require('../models/step.model');
+const testUtils = require('../test-utils');
 
 describe('Steps', () => {
   // Test the GET route
@@ -10,3 +11,4 @@ describe('Steps', () => {
     expect(res.body).toHaveProperty('steps');
   });
 });
+

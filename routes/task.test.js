@@ -1,6 +1,7 @@
 const request = require('supertest');
 const app = require('../server');
 const Task = require('../models/task.model');
+const testUtils = require('../test-utils');
 
 describe('Tasks', () => {
   // Test the GET route
