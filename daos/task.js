@@ -1,4 +1,4 @@
-const Task = require('./models/task');
+const Task = require('../models/task');
 
 module.exports.createTask = async (taskData) => {
   const task = new Task(taskData);

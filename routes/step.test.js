@@ -1,6 +1,6 @@
 const request = require('supertest');
 const app = require('../server');
-const Step = require('../models/step.model');
+const Step = require('../models/step');
 const testUtils = require('../test-utils');
 
 describe('Steps', () => {

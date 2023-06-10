@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 
-const stepDao = require('../dao/step');
+const stepDao = require('../daos/step');
 
 router.post('/', async (req, res) => {
   const step = await stepDao.createStep(req.body);
