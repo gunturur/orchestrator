@@ -8,6 +8,11 @@ router.post('/', async (req, res) => {
   res.json(task);
 });
 
+router.post('/:taskId/steps', async (req, res) => {
+  const task = await taskDao.addStep(req.params.taskId, req.body);
+  res.json(task);
+});
+
 router.get('/:id', async (req, res) => {
   const task = await taskDao.getTask(req.params.id);
   res.json(task);

@@ -4,8 +4,11 @@ const Schema = mongoose.Schema;
 const workflowSchema = new Schema({
   name: { type: String, required: true },
   description: { type: String },
-  tasks: [{ type: Schema.Types.ObjectId, ref: 'Task' }]
+  tasks: [{ type: Schema.Types.ObjectId, ref: 'Task' }],
+  lastUpdatedBy: { type: Schema.Types.ObjectId, ref: 'User' },
+  createdBy: { type: Schema.Types.ObjectId, ref: 'User' }
 });
+
 
 
 module.exports = mongoose.model('workflow', workflowSchema);

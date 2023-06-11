@@ -8,6 +8,11 @@ router.post('/', async (req, res) => {
   res.json(workflow);
 });
 
+router.post('/:workflowId/tasks', async (req, res) => {
+  const workflow = await workflowDao.addTask(req.params.workflowId, req.body);
+  res.json(workflow);
+});
+
 router.get('/:id', async (req, res) => {
   const workflow = await workflowDao.getWorkflow(req.params.id);
   res.json(workflow);

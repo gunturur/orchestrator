@@ -31,3 +31,11 @@ module.exports.deleteWorkflow = async (id) => {
   return Workflow.findByIdAndRemove(id);
 }
 
+module.exports.addTask = async (workflowId, taskData) => {
+  const workflow = await Workflow.findById(workflowId);
+  if (!workflow) throw new Error('Workflow not found');
+  const task = new Task(taskData);
+  await task.save();
+  workflow.tasks.push(task._id);
+  return workflow.save();
+};
