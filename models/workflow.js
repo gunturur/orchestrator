@@ -11,9 +11,9 @@ const workflowSchema = new Schema({
 
 
 
-module.exports = mongoose.model('workflow', workflowSchema);
 
 module.exports.createIndexes = () => {
   mongoose.model('workflow').createIndex({ name: 1 }, { unique: true });
 }
 
+module.exports = mongoose.model('Workflow', workflowSchema);
