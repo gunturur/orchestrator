@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const workflowDao = require('../daos/workflow');
+const taskDao = require('../daos/task');
 
 router.post('/', async (req, res) => {
   const workflow = await workflowDao.createWorkflow(req.body);
@@ -32,6 +33,21 @@ router.delete('/:id', async (req, res) => {
   await workflowDao.deleteWorkflow(req.params.id);
   res.json({ message: 'Workflow deleted' });
 });
+
+module.exports.addTask = async (workflowId, taskData) => {
+  // create a new task
+  const task = new Task(taskData);
+  await task.save();
+
+  // find the workflow and add the task to it
+  const workflow = await Workflow.findById(workflowId);
+  workflow.tasks.push(task._id);
+  await workflow.save();
+
+  // return the updated workflow
+  return workflow;
+};
+
 
 module.exports = router;
 
