@@ -14,7 +14,7 @@ server.use('/workflow', workflowRoutes);
 server.use('/task', taskRoutes); // Using task routes
 server.use('/step', stepRoutes); // Using step routes
 server.use('/user', userRoutes); // Using user routes
-server.use('/workflow/:workflowId/tasks/:taskId/steps', stepRoutes);
+// server.use('/workflow/:workflowId/tasks/:taskId/steps', stepRoutes);
 
 // server.use(/'project'/, projectRoutes); // Using project routes')
 
