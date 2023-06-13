@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import API_BASE_URL from './config';
 import {Link} from "react-router-dom"
-import Card from 'react-bootstrap/Card';
 import Container from "react-bootstrap/Container";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import { Accordion, Card, Button, Navbar, NavDropdown } from 'react-bootstrap';
+
+
 
 function Workflows() {
   const [workflows, setWorkflows] = useState([]);

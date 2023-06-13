@@ -7,23 +7,45 @@ module.exports.createWorkflow = async (workflowData) => {
   return workflow.save();
 }
 
+// module.exports.getWorkflow = async (id) => {
+//   return Workflow.findById(id).lean().populate({
+//     path: 'tasks',
+//     model: 'Task',
+//     populate: {
+//       path: 'steps',
+//       model: 'Step'
+//     }
+//   });
+// }
+
+
 module.exports.getWorkflow = async (id) => {
-  return Workflow.findById(id).populate({
+  const workflow = await Workflow.findById(id).lean().populate({
     path: 'tasks',
     populate: {
       path: 'steps',
+      model: 'Step'
     }
   });
-}
+
+  console.log(workflow);
+
+  return workflow;
+};
+
 
 module.exports.getWorkflows = async () => {
-  return Workflow.find().populate({
-    path: 'tasks',
-    populate: {
-      path: 'steps',
-    }
-  });
+  return Workflow.find()
+    .populate({
+      path: 'tasks',
+      model: 'Task',
+      populate: {
+        path: 'steps',
+        model: 'Step'
+      }
+    });
 }
+
 
 module.exports.updateWorkflow = async (id, updatedData) => {
   return Workflow.findByIdAndUpdate(id, updatedData, { new: true });
