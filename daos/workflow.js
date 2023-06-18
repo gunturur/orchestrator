@@ -20,18 +20,24 @@ module.exports.createWorkflow = async (workflowData) => {
 
 
 module.exports.getWorkflow = async (id) => {
-  const workflow = await Workflow.findById(id).lean().populate({
-    path: 'tasks',
-    populate: {
-      path: 'steps',
-      model: 'Step'
-    }
-  });
-
-  console.log(workflow);
-
-  return workflow;
+  try {
+    const workflow = await Workflow.findById(id).lean().populate({
+      path: 'tasks',
+      populate: {
+        path: 'steps',
+        model: 'Step'
+      }
+    });
+  
+    console.log(workflow);
+  
+    return workflow;
+  } catch (error) {
+    console.error(error);
+    // handle error, maybe send response with error message
+  }
 };
+
 
 
 module.exports.getWorkflows = async () => {

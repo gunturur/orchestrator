@@ -37,17 +37,17 @@ router.get('/:workflowId/tasks', async (req, res) => {
 });
 
 router.get('/:workflowId', async (req, res) => {
-  const workflow = await workflowDao.getWorkflow(req.params.id);
+  const workflow = await workflowDao.getWorkflow(req.params.workflowId);
   res.json(workflow);
 });
 
 router.put('/:workflowId', async (req, res) => {
-  const workflow = await workflowDao.updateWorkflow(req.params.id, req.body);
+  const workflow = await workflowDao.updateWorkflow(req.params.workflowId, req.body);
   res.json(workflow);
 });
 
 router.delete('/:workflowId', async (req, res) => {
-  await workflowDao.deleteWorkflow(req.params.id);
+  await workflowDao.deleteWorkflow(req.params.workflowId);
   res.json({ message: 'Workflow deleted' });
 });
 

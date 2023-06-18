@@ -1,9 +1,9 @@
 import './App.css';
 
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
-//import { HashRouter as Router, Routes, Route } from 'react-router-dom';
-
-import Workflows from './workflows';
+import Workflows from './Workflows';
+import WorkflowForm from './WorkflowForm';
+import WorkflowDetails from './WorkflowDetails';
 
 function App() {
   return (
@@ -11,8 +11,10 @@ function App() {
         {/*Links to different forms*/}
         <Router>
             <Routes>
-                <Route exact path="/" element={<Workflows/>}/>
-                <Route path="workflows" element={<Workflows/>}/>
+                <Route path="/" element={<Workflows/>} />
+                <Route path="/workflows" element={<Workflows/>} />
+                <Route path="/createworkflow" element={<WorkflowForm/>} />
+                <Route path="/workflow/:id" element={<WorkflowDetails/>} />
             </Routes>
         </Router>
     </div>
