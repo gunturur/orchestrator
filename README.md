@@ -1,5 +1,31 @@
 # orchestrator
 
+##################################
+
+As of Jun18 - the orchestrator is still work in progress. 
+
+1. Test coverage is still not full and need to update the test caeses. 
+
+Test Suites: 4 failed, 4 total
+Tests:       6 failed, 11 passed, 17 total
+Snapshots:   0 total
+Time:        7.993 s, estimated 8 s
+
+2. The front end to display the workflows created via API is working, however need to add the forms to create the workflow, tasks and steps. 
+
+3. Eventually the steps should also allow to integrate with any APIs that can do the automation. 
+
+Goal; 
+
+The idea of this prject is to build A orchestration system that helps a network engineer to buil a datacenter , where it involves complex tasks/milestones and each involving the steps. The orchestration allows the user to track each task/milestone and steps and allows the user to finish the project 
+
+4. Authentication and Autherization 
+Authentication is explicitly avoided to make use of internal systems for now. 
+
+
+
+
+##############################
 
 1. Description:
 
