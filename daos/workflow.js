@@ -28,15 +28,20 @@ module.exports.getWorkflow = async (id) => {
         model: 'Step'
       }
     });
-  
+
+    if (!workflow) {
+      const error = new Error('Workflow not found');
+      error.status = 404;
+      throw error;
+    }
+
     console.log(workflow);
-  
     return workflow;
   } catch (error) {
     console.error(error);
-    // handle error, maybe send response with error message
   }
 };
+
 
 
 

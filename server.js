@@ -18,11 +18,9 @@ server.use('/user', userRoutes); // Using user routes
 
 // server.use(/'project'/, projectRoutes); // Using project routes')
 
-
-server.use(function (err, req, res, next) {
-  console.error(err.stack);
-  res.status(500).send('Something broke!');
+server.use(function(err, req, res, next) {
+  res.status(err.status || 500);
+  res.json({ error: err.message });
 });
 
 module.exports = server;
-
