@@ -58,6 +58,24 @@ module.exports.updateWorkflow = async (id, updatedData) => {
 }
 
 module.exports.deleteWorkflow = async (id) => {
+  const workflow = await Workflow.findById(id);
+
+  // Delete tasks associated with the workflow
+  if (workflow.tasks && workflow.tasks.length > 0) {
+    for (let taskId of workflow.tasks) {
+      let task = await Task.findById(taskId);
+      
+      // Delete steps associated with the task
+      if (task.steps && task.steps.length > 0) {
+        for (let stepId of task.steps) {
+          await Step.findByIdAndRemove(stepId);
+        }
+      }
+
+      await Task.findByIdAndRemove(taskId);
+    }
+  }
+
   return Workflow.findByIdAndRemove(id);
 }
 
