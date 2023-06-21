@@ -20,35 +20,38 @@ beforeEach(async () => {
 });
 
 it('should create a new step for a task and return 200 status code', async () => {
-  const task = await new Task({ name: 'testTask' }).save();
+  const taskName = `Task_${Date.now()}`;
+  const task = await new Task({ name: taskName }).save();
   testTask = task;
 
   const res = await request(server)
     .post(`/step/${task._id}`)
-    .send({ name: 'testStep' });
+    .send({ name: 'testStepData' });
 
   expect(res.statusCode).toEqual(200);
-  expect(res.body.name).toEqual('testStep');
+  expect(res.body.name).toEqual('testStepData');
 });
 
 it('should get a specific step and return 200 status code', async () => {
-  const task = await new Task({ name: 'testTask' }).save();
+  const taskName = `Task_${Date.now()}`;
+  const task = await new Task({ name: taskName }).save();
   testTask = task;
 
-  const step = await new Step({ name: 'testStep', taskId: task._id }).save();
+  const step = await new Step({ name: 'testStepData', taskId: task._id }).save();
 
   const res = await request(server)
     .get(`/step/${step._id}`);
 
   expect(res.statusCode).toEqual(200);
-  expect(res.body.name).toEqual('testStep');
+  expect(res.body.name).toEqual('testStepData');
 });
 
 it('should update a specific step and return 200 status code', async () => {
-  const task = await new Task({ name: 'testTask' }).save();
+  const taskName = `Task_${Date.now()}`;
+  const task = await new Task({ name: taskName }).save();
   testTask = task;
 
-  const step = await new Step({ name: 'testStep', taskId: task._id }).save();
+  const step = await new Step({ name: 'testStepData', taskId: task._id }).save();
 
   const updatedData = { name: 'updatedStep' };
 
@@ -61,10 +64,11 @@ it('should update a specific step and return 200 status code', async () => {
 });
 
 it('should delete a specific step and return 200 status code', async () => {
-  const task = await new Task({ name: 'testTask' }).save();
+  const taskName = `Task_${Date.now()}`;
+  const task = await new Task({ name: taskName }).save();
   testTask = task;
 
-  const step = await new Step({ name: 'testStep', taskId: task._id }).save();
+  const step = await new Step({ name: 'testStepData', taskId: task._id }).save();
 
   const res = await request(server)
     .delete(`/step/${step._id}`);
