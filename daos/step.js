@@ -53,5 +53,12 @@ module.exports.deleteStep = async (id) => {
         }
     }
     
-    return Step.findByIdAndRemove(id);
+    const deletedStep = await Step.findByIdAndRemove(id);
+    if(deletedStep) {
+        console.log(`Step with ID ${deletedStep._id} was successfully deleted.`);
+    } else {
+        console.log(`Step with ID ${id} was not deleted.`);
+    }
+    
+    return deletedStep;
 }

@@ -20,27 +20,24 @@ module.exports.createWorkflow = async (workflowData) => {
 
 
 module.exports.getWorkflow = async (id) => {
-  try {
-    const workflow = await Workflow.findById(id).lean().populate({
-      path: 'tasks',
-      populate: {
-        path: 'steps',
-        model: 'Step'
-      }
-    });
-
-    if (!workflow) {
-      const error = new Error('Workflow not found');
-      error.status = 404;
-      throw error;
+  const workflow = await Workflow.findById(id).lean().populate({
+    path: 'tasks',
+    populate: {
+      path: 'steps',
+      model: 'Step'
     }
+  });
 
-    console.log(workflow);
-    return workflow;
-  } catch (error) {
-    console.error(error);
+  if (!workflow) {
+    const error = new Error('Workflow not found');
+    error.status = 404;
+    throw error;
   }
+
+  return workflow;
 };
+
+
 
 
 

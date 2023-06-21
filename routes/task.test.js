@@ -19,6 +19,8 @@ it('should create a new task and return 200 status code', async () => {
     .post('/task')
     .send({ name: 'testTask' });
 
+  console.log(`Created task with ID: ${res.body._id}`);
+
   expect(res.statusCode).toEqual(200);
   expect(res.body.name).toEqual('testTask');
 });
@@ -59,6 +61,8 @@ describe('GET /task/:id', () => {
       .send({ name: 'testTask' });
 
     const taskId = taskRes.body._id;
+
+    console.log(`Fetching task with ID: ${taskId}`);
 
     const res = await request(server)
       .get(`/task/${taskId}`);

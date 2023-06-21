@@ -7,8 +7,16 @@ module.exports.createTask = async (taskData) => {
 };
 
 module.exports.getTask = async (id) => {
-  return Task.findById(id);
+  console.log(`getTask: fetching task with id ${id}`);
+  const task = await Task.findById(id);
+  if (task) {
+    console.log(`getTask: found task with name ${task.name}`);
+  } else {
+    console.log(`getTask: no task found with id ${id}`);
+  }
+  return task;
 };
+
 
 module.exports.getTasks = async () => {
   return Task.find();

@@ -36,10 +36,20 @@ router.get('/:workflowId/tasks', async (req, res) => {
   res.json(workflow.tasks);
 });
 
-router.get('/:workflowId', async (req, res) => {
-  const workflow = await workflowDao.getWorkflow(req.params.workflowId);
-  res.json(workflow);
+router.get('/:workflowId', async (req, res, next) => {
+  try {
+    const workflow = await workflowDao.getWorkflow(req.params.workflowId);
+    res.json(workflow);
+  } catch (err) {
+    if (err.status === 404) {
+      res.status(404).json({ message: err.message });
+    } else {
+      next(err);
+    }
+  }
 });
+
+
 
 router.put('/:workflowId', async (req, res) => {
   const workflow = await workflowDao.updateWorkflow(req.params.workflowId, req.body);

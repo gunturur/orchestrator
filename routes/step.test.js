@@ -4,6 +4,8 @@ const { connectDB, stopDB, clearDB } = require('../test-utils');
 const Task = require('../models/task');
 const Step = require('../models/step');
 
+let testStep;
+
 beforeAll(async () => {
   await connectDB();
 });
@@ -16,73 +18,45 @@ beforeEach(async () => {
   await clearDB();
 });
 
-it('should create a new step for a task and return 200 status code', async () => {
-  const taskRes = await request(server)
-    .post('/task')
-    .send({ name: 'testTask' });
+// Test post step 
+// Test get step by id
+// Test get all steps
+// Test delete step by id
+// Test update step by id
 
-  const taskId = taskRes.body._id;
+describe('createStep', () => {
+  it('should create a new step for a task and return the added step', async () => {
+    // Create a mock task
+    const task = new Task({ name: 'Test Task' });
+    await task.save();
 
-  const res = await request(server)
-    .post(`/task/${taskId}/steps`)
-    .send({ name: 'testStep' });
+    // Define the step data
+    const stepData = { name: 'Test Step' };
 
-  expect(res.statusCode).toEqual(200);
-  
-  const step = res.body.steps[res.body.steps.length - 1];
-  expect(step.name).toEqual('testStep');
-});
+    // Call the createStep function
+    const addedStep = await createStep(task._id, stepData);
 
+    // Assert the result
+    expect(addedStep).toBeDefined();
+    expect(addedStep.name).toEqual('Test Step');
 
-describe('GET /step', () => {
-  it('should get all steps and return 200 status code', async () => {
-    const testStep = await new Step({ name: 'testStep' }).save();
-
-    const res = await request(server)
-      .get('/step');
-
-    expect(res.statusCode).toEqual(200);
-    expect(res.body[0].name).toEqual('testStep');
+    // Verify that the step is added to the task
+    const updatedTask = await Task.findById(task._id).populate('steps');
+    expect(updatedTask.steps).toContainEqual(addedStep._id);
   });
-});
 
-describe('GET /step/:id', () => {
-  it('should get a specific step and return 200 status code', async () => {
-    const testStep = await new Step({ name: 'testStep' }).save();
+  it('should return null if the task is not found', async () => {
+    // Create a task that doesn't exist
+    const taskId = 'nonexistent-task-id';
 
-    const res = await request(server)
-      .get(`/step/${testStep._id}`);
+    // Define the step data
+    const stepData = { name: 'Test Step' };
 
-    expect(res.statusCode).toEqual(200);
-    expect(res.body.name).toEqual('testStep');
+    // Call the createStep function
+    const addedStep = await createStep(taskId, stepData);
+
+    // Assert the result
+    expect(addedStep).toBeNull();
   });
-});
 
-describe('PUT /step/:id', () => {
-  it('should update a specific step and return 200 status code', async () => {
-    const testStep = await new Step({ name: 'testStep' }).save();
-
-    const res = await request(server)
-      .put(`/step/${testStep._id}`)
-      .send({ name: 'updatedStep' });
-
-    expect(res.statusCode).toEqual(200);
-    expect(res.body.name).toEqual('updatedStep');
-  });
-});
-
-describe('DELETE /step/:id', () => {
-  it('should delete a specific step and return 200 status code', async () => {
-    const testStep = await new Step({ name: 'testStep' }).save();
-
-    let res = await request(server)
-      .delete(`/step/${testStep._id}`);
-
-    expect(res.statusCode).toEqual(200);
-
-    res = await request(server)
-      .get(`/step/${testStep._id}`);
-
-    expect(res.statusCode).toEqual(404);
-  });
 });

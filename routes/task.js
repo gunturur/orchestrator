@@ -14,9 +14,15 @@ router.post('/:taskId/steps', async (req, res) => {
 });
 
 router.get('/:id', async (req, res) => {
+  console.log(`Fetching task with ID: ${req.params.id}`);
   const task = await taskDao.getTask(req.params.id);
+  console.log(`Fetched task: ${JSON.stringify(task)}`);
+  if (!task) {
+    return res.status(404).json({ message: 'Task not found' });
+  }
   res.json(task);
 });
+
 
 router.get('/', async (req, res) => {
   const tasks = await taskDao.getTasks();
@@ -25,6 +31,9 @@ router.get('/', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
   const task = await taskDao.updateTask(req.params.id, req.body);
+  if (!task) {
+    return res.status(404).json({ message: 'Task not found' });
+  }
   res.json(task);
 });
 
