@@ -3,28 +3,24 @@ const Task = require('../models/task');
 
 module.exports.createStep = async (taskId, stepData) => {
     try {
-        const step = new Step(stepData);
-        await step.save();
-
-        const task = await Task.findById(taskId);
-        if (!task) {
-            console.log(`Task with ID ${taskId} not found.`);
-            return null;
-        }
-        task.steps.push(step._id);
-        await task.save();
-
-        const updatedTask = await Task.findById(taskId).populate('steps');
-        console.log(updatedTask);
-
-        const addedStep = updatedTask.steps.find(addedStep => addedStep._id.toString() === step._id.toString());
-
-        return addedStep;
-    } catch (error) {
-        console.error(`Error creating step: ${error}`);
+      const step = new Step(stepData);
+      await step.save();
+  
+      const task = await Task.findById(taskId);
+      if (!task) {
+        console.log(`Task with ID ${taskId} not found.`);
         return null;
+      }
+      task.steps.push(step._id);
+      await task.save();
+  
+      const addedStep = await Step.findById(step._id);
+      return addedStep;
+    } catch (error) {
+      console.error(`Error creating step: ${error}`);
+      return null;
     }
-};
+  }
 
 module.exports.getStep = async (id) => {
     return Step.findById(id);

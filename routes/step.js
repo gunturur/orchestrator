@@ -5,6 +5,18 @@ const router = express.Router();
 const stepDao = require('../daos/step');
 const taskDao = require('../daos/task');
 
+router.post('/:taskId', async (req, res) => {
+  const { taskId } = req.params;
+  const stepData = req.body;
+
+  const step = await stepDao.createStep(taskId, stepData);
+  if (!step) {
+    return res.status(404).json({ error: 'Step creation failed.' });
+  }
+
+  res.status(200).json(step);
+});
+
 router.post('/', async (req, res) => {
   const step = await stepDao.createStep(req.body);
   res.json(step);
